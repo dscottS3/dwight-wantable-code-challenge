@@ -1,8 +1,15 @@
-%h1
-  Order:
-  = @order.number
-  %span{class: "badge progress-bar-#{@order.color_class}"}
-    = @order.state
+.row
+  .col-md-9
+    %h1
+      Order:
+      = @order.number
+      %span{class: "badge progress-bar-#{@order.color_class}"}
+        = @order.state
+  .col-md-3
+    - unless @order.canceled?
+      = link_to 'Cancel Order', cancel_order_path(@order), class: 'btn btn-danger',
+        data: { confirm: 'Are you sure you want to cancel this order?' },
+        method: :patch
 
 .row
   .col-md-6

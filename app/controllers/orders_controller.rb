@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :find_order!, only: :show
+  before_action :find_order!, only: [:show, :cancel]
 
   def index
     @orders = Order.all.paginate page: params[:page]
@@ -7,6 +7,14 @@ class OrdersController < ApplicationController
   end
 
   def show
+  end
+
+  def cancel
+    @order.canceled!
+    @order.order_items.update_all(state: OrderItem::RETURNED)
+    @order.payments.update_all(state: Payment::REFUNDED, refunded_at: Time.now)
+
+    redirect_to @order, flash: { notice: 'Order was successfully canceled' }
   end
 
   private
