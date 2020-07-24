@@ -26,6 +26,10 @@ class Order < ApplicationRecord
     scope "#{state}", -> { where(state: state) }
   end
 
+  STATES.each do |s|
+    define_method("#{s}?".to_sym) { s == state }
+  end
+
   def to_param
     number
   end
@@ -33,10 +37,7 @@ class Order < ApplicationRecord
   def self.search(query)
     query.strip!
 
-    results = where(number: query)
-    return results unless results.blank?
-
-    results = where(id: query)
+    results = where(number: query).or(where(id: query))
     return results unless results.blank?
 
     results = joins(:user).where(users: { email: query })
@@ -49,5 +50,11 @@ class Order < ApplicationRecord
     results = joins(:user).where(like_query, "%#{query}%", "%#{query}%")
 
     results
+  end
+
+  def color_class
+    return 'info' if building?
+    return 'danger' if canceled?
+    return 'success' if arrived?
   end
 end
