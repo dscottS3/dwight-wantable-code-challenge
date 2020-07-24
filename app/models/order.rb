@@ -22,12 +22,12 @@ class Order < ApplicationRecord
   delegate :name, to: :user, prefix: true
   delegate :email, to: :user, prefix: true
 
-  STATES.each do |state|
-    scope "#{state}", -> { where(state: state) }
-  end
-
-  STATES.each do |s|
-    define_method("#{s}?".to_sym) { s == state }
+  # loop over STATES constant to create corresponding scopes and a couple of
+  # convenience methods
+  STATES.each do |the_state|
+    scope "#{the_state}", -> { where(state: the_state) }
+    define_method("#{the_state}?".to_sym) { the_state == state }
+    define_method("#{the_state}!".to_sym) { update(state: the_state) }
   end
 
   def to_param

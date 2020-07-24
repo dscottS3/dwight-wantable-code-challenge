@@ -1,0 +1,38 @@
+%h1
+  Coupon Reports
+  %small= @coupon.present? ? @coupon.name : ''
+
+= form_with(url: coupons_reports_path, method: :get) do
+  = select_tag :coupon_id,
+    options_from_collection_for_select(@coupons, :id, :name, params[:coupon_id]),
+    prompt: 'Select a Coupon'
+  = submit_tag :submit
+
+- unless @coupon.blank?
+  %br/
+  %p.lead
+    Number of Orders:
+    = @order_items.count
+    %br/
+    Coupon Total:
+    = number_to_currency @order_items.sum(:price)
+
+  - orders = []
+  %p.lead Coupon Users:
+  %table.table.table-striped.table-hover
+    %tr
+      %th Name
+      %th Email
+      %th Total Revenue
+      %th Total Profit
+    - @order_items.each do |order_item|
+      - orders << order_item.order
+      %tr
+        %td= link_to order_item.order.user_name, order_item.order.user
+        %td= order_item.order.user_email
+        %td= number_to_currency(order_item.order.total)
+        %td= number_to_currency(order_item.order.total + order_item.price)
+    %tr
+      %th{colspan: 2} Totals
+      %th= number_to_currency orders.sum(&:total)
+      %th= number_to_currency (orders.sum(&:total) + @order_items.sum(:price))
