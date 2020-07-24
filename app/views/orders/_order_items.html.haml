@@ -1,0 +1,21 @@
+.row
+  .col-md-12
+    .panel.panel-default
+      .panel-heading
+        %strong Order Items
+      .panel-body
+        %table.table.table-striped.table-hover
+          %tr
+            %th ID
+            %th Quantity
+            %th Price
+            %th State
+            %th Type
+          - order_items.each do |item|
+            %tr
+              %td= item.id
+              %td= item.quantity
+              %td= number_to_currency item.price.to_f
+              %td= item.state
+              %td= item.source_type
+

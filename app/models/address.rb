@@ -11,4 +11,8 @@ class Address < ApplicationRecord
   belongs_to :user
 
   has_many   :orders
+
+  def city_state_zip
+    "#{city}, #{state} #{zipcode}"
+  end
 end

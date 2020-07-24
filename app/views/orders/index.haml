@@ -1,27 +1,25 @@
-.row
-  .col-md-12
-    - if @orders.blank?
-      %h1 No orders found!
+- if @orders.blank?
+  %h1 No orders found!
 
-    - else
-      %h1 Orders
-      .row
-        .col-md-12
-          = form_with(url: orders_path, method: :get) do
-            = text_field_tag :q, params[:q], placeholder: 'search'
-            = submit_tag 'search'
-      %table.table.table-hover
-        %tr
-          %th Order Number
-          %th Name
-          %th Email
-          %th State
-          %th Created At
+- else
+  %h1 Orders
+  .row
+    .col-md-12
+      = form_with(url: orders_path, method: :get) do
+        = text_field_tag :q, params[:q], placeholder: 'search'
+        = submit_tag 'search'
+  %table.table.table-hover
+    %tr
+      %th Order Number
+      %th Name
+      %th Email
+      %th State
+      %th Created At
 
-        - @orders.each do |order|
-          %tr
-            %td= link_to order.number, order
-            %td= link_to order.user_name, orders_path(user_id: order.user&.id)
-            %td= order.user_email
-            %td= link_to order.state, orders_path(state: order.state)
-            %td= order.created_at
+    - @orders.each do |order|
+      %tr
+        %td= link_to order.number, order
+        %td= link_to order.user_name, orders_path(user_id: order.user&.id)
+        %td= order.user_email
+        %td= link_to order.state, orders_path(state: order.state)
+        %td= order.created_at

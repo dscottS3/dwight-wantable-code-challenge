@@ -1,0 +1,23 @@
+.row
+  .col-md-12
+    .panel.panel-default
+      .panel-heading
+        %strong Payments
+      .panel-body
+        %table.table.table-striped.table-hover
+          %tr
+            %th ID
+            %th Amount
+            %th State
+            %th Refunded At
+            %th Payment Type
+            %th Completed At
+          - payments.each do |payment|
+            %tr
+              %td= payment.id
+              %td= number_to_currency(payment.amount.to_f)
+              %td= payment.state
+              %td= payment.refunded_at.present? ? payment.refunded_at : '-'
+              %td= payment.payment_type
+              %td= payment.completed_at
+
