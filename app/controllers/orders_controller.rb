@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :find_order!, only: :show
 
   def index
-    @orders = Order.all
+    @orders = Order.all.paginate page: params[:page]
     filter_orders
   end
 

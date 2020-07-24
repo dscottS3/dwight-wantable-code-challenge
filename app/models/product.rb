@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  self.per_page = 10
+
   validates_presence_of :name
 
   validates   :sku,
@@ -27,4 +29,12 @@ class Product < ApplicationRecord
 
   has_many :order_items,
            as: :source
+
+  scope :with_sales, -> {
+    joins(:order_items).where(order_items: { state: OrderItem::SOLD })
+  }
+
+  scope :between, ->(dates) {
+    joins(:order_items).where(order_items: { created_at: (dates[0]..dates[1]) })
+  }
 end

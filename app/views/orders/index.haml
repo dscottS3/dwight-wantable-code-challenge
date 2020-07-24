@@ -23,3 +23,5 @@
         %td= order.user_email
         %td= link_to order.state, orders_path(state: order.state)
         %td= order.created_at
+
+= will_paginate @orders
