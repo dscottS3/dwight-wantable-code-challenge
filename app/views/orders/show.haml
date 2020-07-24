@@ -9,7 +9,7 @@
     %h3 User Info
     %p
       %br/
-      = @order.user_name
+      = link_to @order.user_name, @order.user
       %br/
       = @order.user_email
 
