@@ -19,11 +19,35 @@ class Order < ApplicationRecord
   has_many :order_items
   has_many :payments
 
+  delegate :name, to: :user, prefix: true
+  delegate :email, to: :user, prefix: true
+
   STATES.each do |state|
     scope "#{state}", -> { where(state: state) }
   end
 
   def to_param
     number
+  end
+
+  def self.search(query)
+    query.strip!
+
+    results = where(number: query)
+    return results unless results.blank?
+
+    results = where(id: query)
+    return results unless results.blank?
+
+    results = joins(:user).where(users: { email: query })
+    return results unless results.blank?
+
+    results = joins(:user).where(users: { name: query })
+    return results unless results.blank?
+
+    like_query = 'users.email like ? or users.name like ?'
+    results = joins(:user).where(like_query, "%#{query}%", "%#{query}%")
+
+    results
   end
 end
