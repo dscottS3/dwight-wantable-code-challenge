@@ -1,6 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
+  context 'pagination' do
+    let(:created_orders) { create_list :order, 30 }
+    let(:orders) { Order.all }
+
+    it 'paginates per 10 records' do
+      expect(orders.paginate(page: 1)).to eq orders.first(10)
+      expect(orders.paginate(page: 3)).to eq orders.last(10)
+    end
+  end
+
   context '#color_class' do
     it 'has a state of building' do
       order = create :order, :building
