@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'admin#index'
+  root 'orders#index'
 
   resources :users, only: :show
   resources :orders, only: [:index, :show], param: :number do
