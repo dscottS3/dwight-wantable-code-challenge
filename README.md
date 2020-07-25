@@ -1,3 +1,39 @@
+# Overview
+
+Dwight Scott's Wantable Code Challenge submission
+
+## technologies
+
+Leveraged existing technolgies listed below. However a few gems were
+installed to compliment what was existing.
+
+- pry (debugging)
+- rspec (testing)
+- factory_bot_rails (testing and creating data easily)
+- will_paginate (popular pagination gem)
+
+## getting started
+
+- run `bundle` to install any missing gems
+- run `bundle exec rails s` to start the server
+- run `bundle exec rspec` to run the tests
+
+## quick notes
+
+I've added a `users_controller` to demonstrate how to reuse partials and
+to filter associated data even further. I've also crated a few helper
+method based on the `STATES` constant in it's respective model.
+
+## TODO
+
+- Add more specs to controllers
+- Improve navigation (mainly for users view)
+- Make "Cancel Order" button an ajax call and render partials on `200`
+
+
+# REQUIREMENTS BELOW
+
+
 # Wantable Code Challenge App (Simple E-Commerce)
 
 Welcome to the challenge portion of your Wantable Rails interview! Here we've provided a sample application and database with data already created and we're asking you to make some backend order fulfillment and reporting pages for it! The goal is to spend 3-5 hours on this so don't go overboard with styling or making it look perfect; we're looking to see how you implement the solutions. There are a ton of different ways to meet these requirements and we want to see what you would do and what you're most comfortable building in. Choose your own adventure! Feel free to add/remove routes/controllers/gems/frontend frameworks if you feel like it better "completes" the app or you are more comfortable with.
