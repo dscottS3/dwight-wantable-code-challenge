@@ -5,7 +5,7 @@
   %h1 Orders
   .row
     .col-md-12
-      = form_with(url: orders_path, method: :get) do
+      = form_with(url: orders_path, method: :get, local: true) do
         = text_field_tag :q, params[:q], placeholder: 'search'
         = submit_tag 'search'
   %table.table.table-hover
