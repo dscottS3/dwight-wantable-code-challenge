@@ -2,7 +2,7 @@
   Coupon Reports
   %small= @coupon.present? ? @coupon.name : ''
 
-= form_with(url: coupons_reports_path, method: :get) do
+= form_with(url: coupons_reports_path, method: :get, local: true) do
   = select_tag :coupon_id,
     options_from_collection_for_select(@coupons, :id, :name, params[:coupon_id]),
     prompt: 'Select a Coupon'
@@ -35,4 +35,6 @@
     %tr
       %th{colspan: 2} Totals
       %th= number_to_currency orders.sum(&:total)
+      -# seems counter intuitive but adding the order item total to order total
+      -# because the order items total is a negative number.
       %th= number_to_currency (orders.sum(&:total) + @order_items.sum(:price))

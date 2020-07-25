@@ -1,6 +1,6 @@
 %h1 Sales Reports
 
-= form_with(url: sales_reports_path, method: :get) do
+= form_with(url: sales_reports_path, method: :get, local: true) do
   %p
     = label_tag "Start Date:"
     = date_select :start, nil, start_year: 2000

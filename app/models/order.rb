@@ -58,5 +58,6 @@ class Order < ApplicationRecord
     return 'info' if building?
     return 'danger' if canceled?
     return 'success' if arrived?
+    'primary'
   end
 end

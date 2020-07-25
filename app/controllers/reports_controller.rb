@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :find_coupon
+  before_action :find_coupon, only: :coupons
 
   def index
   end
